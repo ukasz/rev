@@ -492,6 +492,8 @@ namespace SST{
       }
 
       static bool lw(RevFeature *F, RevRegFile *R,RevMem *M,RevInst Inst) {
+#if 0
+        // "good" version from 179934610d3584fae8642424b02bd531a3294c95
         if( F->IsRV32() ){
           //SEXT(R->RV32[Inst.rd],M->ReadU32( (uint64_t)(R->RV32[Inst.rs1]+(int32_t)(td_u32(Inst.imm,12)))),32);
           M->ReadVal(F->GetHart(), (uint64_t)(R->RV32[Inst.rs1]+(int32_t)(td_u32(Inst.imm,12))),
@@ -511,6 +513,15 @@ namespace SST{
           SEXT(R->RV64[Inst.rd], R->RV64[Inst.rd], 32);
           R->RV64_PC += Inst.instSize;
         }
+#else
+        // "bad" Lee version
+        int32_t val;
+        M->ReadVal(F->GetHart(), R->GetX<uint64_t>(F, Inst.rs1) + Inst.ImmSignExt(12), &val,
+                   Inst.hazard,
+                   REVMEM_FLAGS(F->IsRV32() ? RevCPU::RevFlag::F_SEXT32 : RevCPU::RevFlag::F_SEXT64));
+        R->SetX(F, Inst.rd, val);
+        R->AdvancePC(F, Inst.instSize);
+#endif
         // update the cost
         R->cost += M->RandCost(F->GetMinCost(),F->GetMaxCost());
         return true;

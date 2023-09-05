@@ -1,16 +1,18 @@
 1. Overview
 -----------
 
-This version of RevTracer represents a proof-of-concept
-prototype for evaluation purposes only.
-
-This code lives on the 'tracer' branch and should never
-be released on any publicly supported branches.
+Provides compact visualization of instruction execution
+with disassembly and register accesses shown on one line.
 
 2. Usage
 --------
 
 The tracer will be enabled for verbosity >= 5.
+
+Requires GCC tools and links to libdisasm.s.
+
+For a version that is independent (but not maintained)
+use the NO_LIB tag. ( git checkout NO_LIB )
 
 3. Testing
 ----------

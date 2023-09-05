@@ -122,6 +122,15 @@ the tracer can be tested as follows:
 6. Issues/Enhancements
 ----------------------
 
+  - This version only works with RISCV GCC toolchain and links
+    to disasm.a (part of spike simulator). Should be able to
+    support llvm-disasm as well at some point.
+
+  - Tracing is on when SST VERBOSE>=5. This could cause log file
+    sizes to blow up (but maybe that is expected for highly
+    verbose outputs). Another option would be to have it disabled
+    until the magic 'xor' instruction toggles the trace enable.
+  
   - Threading has not been tested. Conversely, testing has only
     been done using
           #define _REV_HART_COUNT_ 1 (RevInstTable.h)

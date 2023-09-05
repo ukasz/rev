@@ -85,9 +85,15 @@ set(LDFLAGS "${SST_LDFLAGS}  -fno-stack-protector")
 message (LDFLAGS="${LDFLAGS}")
 
 #------------------------------------------------------------------------
+#-- DISASM
+#------------------------------------------------------------------------
+set(DISASM_FLAGS "-I$ENV{RISCV}/include -L$ENV{RISCV}/lib -ldisasm")
+message (DISASM_FLAGS="${DISASM_FLAGS}")
+
+#------------------------------------------------------------------------
 #-- COMPILER OPTIONS
 #------------------------------------------------------------------------
-set(CMAKE_CXX_FLAGS "-O2 -Wall ${CMAKE_CXX_FLAGS} -std=c++17 -I./ ${LDFLAGS} ${REVCPU_COMPILER_MACROS}")
+set(CMAKE_CXX_FLAGS "-O2 -Wall ${CMAKE_CXX_FLAGS} -std=c++17 -I./ ${LDFLAGS} ${REVCPU_COMPILER_MACROS} ${DISASM_FLAGS}")
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O0 -Wall ${REVCPU_COMPILER_MACROS}")
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3 -Wall ${REVCPU_COMPILER_MACROS}")
 

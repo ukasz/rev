@@ -22,9 +22,6 @@ set(RevCPUSrcs
   RevTracer.cc
   librevcpu.cc
   RevPrefetcher.cc
-  diasm.cc
-  isa_parser.cc
-  regnames.cc
   RevCoProc.cc
   )
 

@@ -23,7 +23,8 @@
 // -- Rev Headers
 
 // -- Other headers to be subsumed (TODO)
-#include "rvdiasm/disasm.h"
+//#include "rvdiasm/disasm.h"
+#include "riscv/disasm.h"
 
 namespace SST{
   namespace RevCPU{

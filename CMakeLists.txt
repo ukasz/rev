@@ -87,13 +87,23 @@ message (LDFLAGS="${LDFLAGS}")
 #------------------------------------------------------------------------
 #-- DISASM
 #------------------------------------------------------------------------
-set(DISASM_FLAGS "-I$ENV{RISCV}/include -L$ENV{RISCV}/lib -ldisasm")
-message (DISASM_FLAGS="${DISASM_FLAGS}")
+option(REV_TRACER "Enable tracer compilation" ON)
+message (REV_TRACER="${REV_TRACER}")
+find_library(DISASM_LIB disasm)
+if(REV_TRACER AND DISASM_LIB)
+  cmake_path(GET DISASM_LIB PARENT_PATH disasm_lib_dir)
+  include_directories("${disasm_lib_dir}/../include")
+  link_directories("${disasm_lib_dir}/../lib")
+  link_libraries("disasm")
+else()
+  message(WARNING "Disabling REV_TRACER compilation")
+  add_compile_definitions(-DNO_REV_TRACER)
+endif()
 
 #------------------------------------------------------------------------
 #-- COMPILER OPTIONS
 #------------------------------------------------------------------------
-set(CMAKE_CXX_FLAGS "-O2 -Wall ${CMAKE_CXX_FLAGS} -std=c++17 -I./ ${LDFLAGS} ${REVCPU_COMPILER_MACROS} ${DISASM_FLAGS}")
+set(CMAKE_CXX_FLAGS "-O2 -Wall ${CMAKE_CXX_FLAGS} -std=c++17 -I./ ${LDFLAGS} ${REVCPU_COMPILER_MACROS}")
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O0 -Wall ${REVCPU_COMPILER_MACROS}")
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3 -Wall ${REVCPU_COMPILER_MACROS}")
 

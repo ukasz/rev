@@ -9,10 +9,17 @@ with disassembly and register accesses shown on one line.
 
 The tracer will be enabled for verbosity >= 5.
 
-Requires GCC tools and links to libdisasm.s.
+Requires GCC tools and links to libdisasm.a which is part of
+rev_isa_sim (Spike).
 
-For a version that is independent (but not maintained)
-use the NO_LIB tag. ( git checkout NO_LIB )
+If the library is not found the tracer compilation is disabled.
+
+To explicitly disable compilation of tracer in cmake use:
+  -DREV_TRACER="OFF"
+
+A tagged revision provides an earlier version that does not
+require any libraries. To evaluate this use:
+   git checkout NO_LIB
 
 3. Testing
 ----------
@@ -126,7 +133,10 @@ the tracer can be tested as follows:
 
   - This version only works with RISCV GCC toolchain and links
     to disasm.a (part of spike simulator). Should be able to
-    support llvm-disasm as well at some point.
+    support llvm-disasm as well at some point. This will require
+    an interface wrapper for disassembler objects to support
+    various implementations. This would also require more sophisticated
+    support in CMakeLists.txt.
 
   - Tracing is on when SST VERBOSE>=5. This could cause log file
     sizes to blow up (but maybe that is expected for highly
@@ -175,7 +185,6 @@ the tracer can be tested as follows:
 
     It would be helpful to have a consistency check in the REV core
     to ensure the machine and compiled elf match.
-
 
 
 

@@ -26,12 +26,15 @@ RevTracer::RevTracer(unsigned Verbosity, std::string Name)
 
 SST::RevCPU::RevTracer::~RevTracer()
 {
+    #ifndef NO_REV_TRACER
     if (diasm) delete diasm;
     if (isaParser) delete isaParser;
+    #endif
 }
 
 int SST::RevCPU::RevTracer::SetDisassembler(std::string machine)
 {
+    #ifndef NO_REV_TRACER
     try {
         // TODO what are options for privelege level (eg. MSU)
         isaParser = new isa_parser_t(machine.c_str(),"MSU");
@@ -40,6 +43,9 @@ int SST::RevCPU::RevTracer::SetDisassembler(std::string machine)
         return 1;
     }
     return 0;
+    #else
+    return 1;
+    #endif
 }
 
 int SST::RevCPU::RevTracer::SetTraceSymbols(std::map<uint64_t, std::string> *TraceSymbols)
@@ -138,9 +144,11 @@ std::string SST::RevCPU::RevTracer::RenderOneLiner()
     
     // Disassembly
     std::stringstream ss_disasm;
+    #ifndef NO_REV_TRACER
     if (diasm)
         ss_disasm << hex << diasm->disassemble(insn) << "\t";
     else
+    #endif
         ss_disasm << hex << setw(8) << setfill('0') << hex << "0x" << insn << "\t";
 
     // Initial rendering
@@ -206,11 +214,13 @@ void SST::RevCPU::RevTracer::Reset()
 
 void SST::RevCPU::RevTracer::fmt_reg(uint8_t r, std::stringstream& s)
 {
+    #ifndef NO_REV_TRACER
     if (r<32) {
         s<<xpr_name[r];
         return;
     }
     s << "?" << (unsigned)r;
+    #endif
 }
 
 void SST::RevCPU::RevTracer::fmt_data(unsigned len, uint64_t d, std::stringstream &s)

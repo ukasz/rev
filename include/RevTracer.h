@@ -22,9 +22,10 @@
 
 // -- Rev Headers
 
-// -- Other headers to be subsumed (TODO)
-//#include "rvdiasm/disasm.h"
+// Integrated Disassembler (toolchain dependent)
+#ifndef NO_REV_TRACER
 #include "riscv/disasm.h"
+#endif
 
 namespace SST{
   namespace RevCPU{
@@ -116,8 +117,11 @@ namespace SST{
 
     private:
       std::string name;
+      // TODO Generic interface wrappers that allow using any disassembler
+      #ifndef NO_REV_TRACER
       isa_parser_t* isaParser;
       disassembler_t* diasm;
+      #endif
       bool outputEnabled;   // disable output but continue capturing
       bool memTraceEnable; // used to avoid memory tracing not related to instruction.
       TraceEvents_t events;

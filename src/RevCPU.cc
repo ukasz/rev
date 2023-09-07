@@ -251,6 +251,7 @@ RevCPU::RevCPU( SST::ComponentId_t id, SST::Params& params )
     }
   }
 
+  #ifndef NO_REV_TRACER
   // Assign tracer to each core
   if (output.getVerboseLevel()>=5) {
     for( unsigned i=0; i<numCores; i++ ){
@@ -265,6 +266,7 @@ RevCPU::RevCPU( SST::ComponentId_t id, SST::Params& params )
       Procs[i]->SetTracer(trc);
     }
   }
+  #endif
 
   // setup the per-proc statistics
   TotalCycles.reserve(TotalCycles.size() + numCores);

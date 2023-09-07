@@ -30,28 +30,37 @@
 
 using namespace SST::RevCPU;
 
-// Tracer macros --- TEMPORARY I HOPE ---
+// Tracer macros
+#ifndef NO_REV_TRACER
 #define __SST_REVCPU_TRACER_MACROS__
+#endif
+
 #ifdef __SST_REVCPU_TRACER_MACROS__
-
-#define TRC32RD(reg0)         if (Tracer) Tracer->regRead(Inst.reg0, R->RV32[Inst.reg0]);
-#define TRC64RD(reg0)         if (Tracer) Tracer->regRead(Inst.reg0, R->RV64[Inst.reg0]);
-
-#define TRC32RD2(reg0,reg1)    if (Tracer) Tracer->regRead(Inst.reg0, R->RV32[Inst.reg0], Inst.reg1, R->RV32[Inst.reg1]);
-#define TRC64RD2(reg0,reg1)    if (Tracer) Tracer->regRead(Inst.reg0, R->RV64[Inst.reg0], Inst.reg1, R->RV64[Inst.reg1]);
-
+#define TRC32RD(reg0)             if (Tracer) Tracer->regRead(Inst.reg0, R->RV32[Inst.reg0]);
+#define TRC64RD(reg0)             if (Tracer) Tracer->regRead(Inst.reg0, R->RV64[Inst.reg0]);
+#define TRC32RD2(reg0,reg1)       if (Tracer) Tracer->regRead(Inst.reg0, R->RV32[Inst.reg0], Inst.reg1, R->RV32[Inst.reg1]);
+#define TRC64RD2(reg0,reg1)       if (Tracer) Tracer->regRead(Inst.reg0, R->RV64[Inst.reg0], Inst.reg1, R->RV64[Inst.reg1]);
 #define TRC32RD3(reg0,reg1,reg2)  if (Tracer) Tracer->regRead(Inst.reg0, R->RV32[Inst.reg0], Inst.reg1, R->RV32[Inst.reg1], Inst.reg2, R->RV32[Inst.reg2]);
 #define TRC64RD3(reg0,reg1,reg2)  if (Tracer) Tracer->regRead(Inst.reg0, R->RV64[Inst.reg0], Inst.reg1, R->RV64[Inst.reg1], Inst.reg2, R->RV64[Inst.reg2]);
-
-#define TRC32RD4MEM2(reg0,reg1) if (Tracer) Tracer->regRead4Mem(Inst.reg0,R->RV32[Inst.reg0], Inst.reg1,R->RV32[Inst.reg1])
-#define TRC64RD4MEM2(reg0,reg1) if (Tracer) Tracer->regRead4Mem(Inst.reg0,R->RV64[Inst.reg0], Inst.reg1,R->RV64[Inst.reg1])
-
-#define TRC32WR(reg0)          if (Tracer) Tracer->regWrite(Inst.reg0, R->RV32[Inst.reg0])
-#define TRC64WR(reg0)          if (Tracer) Tracer->regWrite(Inst.reg0, R->RV64[Inst.reg0])
-
-#define TRC32PC()              if (Tracer) Tracer->pcWrite(R->RV32_PC)
-#define TRC64PC()              if (Tracer) Tracer->pcWrite(R->RV64_PC)
-
+#define TRC32RD4MEM2(reg0,reg1)   if (Tracer) Tracer->regRead4Mem(Inst.reg0,R->RV32[Inst.reg0], Inst.reg1,R->RV32[Inst.reg1])
+#define TRC64RD4MEM2(reg0,reg1)   if (Tracer) Tracer->regRead4Mem(Inst.reg0,R->RV64[Inst.reg0], Inst.reg1,R->RV64[Inst.reg1])
+#define TRC32WR(reg0)             if (Tracer) Tracer->regWrite(Inst.reg0, R->RV32[Inst.reg0])
+#define TRC64WR(reg0)             if (Tracer) Tracer->regWrite(Inst.reg0, R->RV64[Inst.reg0])
+#define TRC32PC()                 if (Tracer) Tracer->pcWrite(R->RV32_PC)
+#define TRC64PC()                 if (Tracer) Tracer->pcWrite(R->RV64_PC)
+#else
+#define TRC32RD(reg0)
+#define TRC64RD(reg0)
+#define TRC32RD2(reg0,reg1)
+#define TRC64RD2(reg0,reg1)
+#define TRC32RD3(reg0,reg1,reg2)
+#define TRC64RD3(reg0,reg1,reg2)
+#define TRC32RD4MEM2(reg0,reg1)
+#define TRC64RD4MEM2(reg0,reg1)
+#define TRC32WR(reg0)
+#define TRC64WR(reg0)
+#define TRC32PC()
+#define TRC64PC()
 #endif
 
 namespace SST{

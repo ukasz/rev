@@ -92,12 +92,14 @@ message (REV_TRACER="${REV_TRACER}")
 find_library(DISASM_LIB disasm)
 if(REV_TRACER AND DISASM_LIB)
   cmake_path(GET DISASM_LIB PARENT_PATH disasm_lib_dir)
+  message ("disasm_lib_dir=${disasm_lib_dir}")
   include_directories("${disasm_lib_dir}/../include")
   link_directories("${disasm_lib_dir}/../lib")
   link_libraries("disasm")
 else()
   message(WARNING "Disabling REV_TRACER compilation")
-  add_compile_definitions(-DNO_REV_TRACER)
+  # requires cmake 3.12
+  add_compile_definitions(NO_REV_TRACER)
 endif()
 
 #------------------------------------------------------------------------

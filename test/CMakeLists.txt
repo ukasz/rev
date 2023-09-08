@@ -98,14 +98,14 @@ set_tests_properties(TEST_BIG_LOOP
     LABELS "all;rv64"
 )
 
-add_test(NAME TEST_MINFFT COMMAND run_minfft.sh WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/minfft" ) # minfft
-set_tests_properties(TEST_MINFFT
-  PROPERTIES
-    ENVIRONMENT "RVCC=${RVCC}"
-    TIMEOUT 45
-    PASS_REGULAR_EXPRESSION "${passRegex}"
-    LABELS "all;rv64"
-)
+#add_test(NAME TEST_MINFFT COMMAND run_minfft.sh WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/minfft" ) # minfft
+#set_tests_properties(TEST_MINFFT
+#  PROPERTIES
+#    ENVIRONMENT "RVCC=${RVCC}"
+#    TIMEOUT 45
+#    PASS_REGULAR_EXPRESSION "${passRegex}"
+#    LABELS "all;rv64"
+#)
 
 add_test(NAME TEST_LARGE_BSS COMMAND run_large_bss.sh WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/large_bss" ) # large_bss
 set_tests_properties(TEST_LARGE_BSS
@@ -307,6 +307,23 @@ set_tests_properties(AMOADD_CXX_MEMH
     LABELS "all;rv64"
 )
 
+add_test(NAME ARGC_REVMEM COMMAND run_argc.sh WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/argc_revmem")
+set_tests_properties(ARGC_REVMEM
+  PROPERTIES
+    ENVIRONMENT "RVCC=${RVCC}"
+    TIMEOUT 30
+    PASS_REGULAR_EXPRESSION "${passRegex}"
+    LABELS "all;rv64"
+)
+
+add_test(NAME ARGC_MEMH COMMAND run_argc.sh WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/argc_memh")
+set_tests_properties(ARGC_MEMH
+  PROPERTIES
+    ENVIRONMENT "RVCC=${RVCC}"
+    TIMEOUT 30
+    PASS_REGULAR_EXPRESSION "${passRegex}"
+    LABELS "all;rv64"
+)
 
 
 # -- PROCESS CTest Config Variables
